@@ -60,10 +60,13 @@ def train_model(features_df, tte_df):
         'colsample_bytree': uniform(0.5, 0.5),
         'min_child_weight': randint(1, 11),
     }
-    sampler = ParameterSampler(param_space, n_iter=30, random_state=42)
+    n_iter = 30
+    sampler = ParameterSampler(param_space, n_iter=n_iter, random_state=42)
 
     results = []
+    print(f"Training: {n_iter} randomized-search configs", flush=True)
     for i, params in enumerate(sampler):
+        print(f"[{i + 1}/{n_iter}] training config: {params}", flush=True)
         model = xgb.XGBClassifier(
             **params,
             tree_method='hist',
@@ -78,6 +81,7 @@ def train_model(features_df, tte_df):
         val_pr = average_precision_score(
             y_val, model.predict_proba(X_val, validate_features=False)[:, 1],
         )
+        print(f"    val PR-AUC: {val_pr:.4f} (best_iter={getattr(model, 'best_iteration', None)})", flush=True)
         results.append({
             'iter': i,
             **params,
@@ -85,6 +89,7 @@ def train_model(features_df, tte_df):
             'val_pr_auc': val_pr,
         })
 
+    print("Selecting best config and retraining...", flush=True)
     best = max(results, key=lambda r: r['val_pr_auc'])
     print('Best:', best)
 

@@ -13,7 +13,7 @@ Predict Component X failures in heavy-duty trucks from sensor telemetry so maint
 
 ## 📊 Dataset
 
-[SCANIA Component X Dataset](https://doi.org/10.5878/jvb5-d390) — real-world multivariate time series from 23,550 SCANIA heavy-duty trucks, published in *Scientific Data* (2025).
+[SCANIA Component X Dataset](https://researchdata.se/en/catalogue/dataset/2024-34/3) — real-world multivariate time series from 23,550 SCANIA heavy-duty trucks, published in *Scientific Data* (2025).
 
 | File | Rows × Cols | Role |
 | :--- | ---: | :--- |
